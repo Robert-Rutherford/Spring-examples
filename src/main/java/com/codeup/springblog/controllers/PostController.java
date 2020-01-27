@@ -24,12 +24,13 @@ public class PostController {
     @GetMapping("/posts/create")
     @ResponseBody
     public String createPostPage(){
-        return "view the form for creating a post";
+        return "view the form for creating a post...";
     }
 
     @PostMapping("/posts/create")
+    @ResponseBody
     public String createPost(){
-        return "Creating new post";
+        return "Creating new post...";
     }
 
 
