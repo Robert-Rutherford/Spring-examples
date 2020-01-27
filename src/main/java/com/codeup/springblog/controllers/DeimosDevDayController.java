@@ -9,15 +9,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DeimosDevDayController {
 
     @GetMapping("/deimos")
-    @ResponseBody
+
     public String devDay(){
-        return "There are 31 days til Developer Day!";
+        return "deimos";
     }
 
-
-    @GetMapping("/deimos/{daysLeft}")
-    @ResponseBody
-    public String devDay(@PathVariable String daysLeft){
-        return "There are " + daysLeft + " days til Developer Day!";
-    }
+//    @GetMapping("/deimos")
+//    @ResponseBody
+//    public String devDay(){
+//        return "There are 31 days til Developer Day!";
+//    }
+//
+//
+//    @GetMapping("/deimos/{daysLeft}")
+//    @ResponseBody
+//    public String devDay(@PathVariable String daysLeft){
+//        return "There are " + daysLeft + " days til Developer Day!";
+//    }
 }
