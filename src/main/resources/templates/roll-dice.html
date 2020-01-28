@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Roll Dice</title>
 </head>
 <body>
-<h1>Guess the dice roll...</h1>
-<ul>
-    <li><a>1</a></li>
-    <li><a>2</a></li>
-    <li><a>3</a></li>
-    <li><a>4</a></li>
-    <li><a>5</a></li>
-    <li><a>6</a></li>
-</ul>
+<h1>Guess the dice roll...(1-6)</h1>
+<form action="/roll-dice" method="post">
+    <input name="guessNumber" id="guessInput" type="number" min="1" max="6" value="1">
+    <button type="submit">Guess</button>
+</form>
 
+<h2>You Guessed: <span th:text="${guess}">nothing</span></h2>
+<h2>The Number: <span th:text="${random}">nothing</span></h2>
 
 
 </body>
