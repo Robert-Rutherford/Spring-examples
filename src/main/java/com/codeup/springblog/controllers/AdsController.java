@@ -4,7 +4,7 @@ import com.codeup.springblog.repositories.AdRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-public class AdController {
+class AdController {
     private final AdRepository adDao;
 
     public AdController(AdRepository adDao) {
