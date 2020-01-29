@@ -16,11 +16,25 @@ public class Post {
     @Column(nullable = false, length = 200)
     private String body;
 
+    @OneToOne
+    private PostDetails postDetails;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
+
     public Post(){
     }
 
+    public PostDetails getPostDetails() {
+        return postDetails;
+    }
 
-    public Post(long id,String title,String body){
+    public void setPostDetails(PostDetails postDetails) {
+        this.postDetails = postDetails;
+    }
+
+    public Post(long id, String title, String body){
         this.title = title;
         this.body = body;
         this.id = id;
