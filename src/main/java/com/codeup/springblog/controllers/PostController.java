@@ -4,12 +4,8 @@ import com.codeup.springblog.models.Post;
 import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -62,10 +58,11 @@ public class PostController {
         return "Creating new post...";
     }
 
-    @PostMapping("posts/delete/{id}")
-    public String deletePost(@PathVariable long id, Model model) {
+    @PostMapping("posts/{id}/delete")
+    public String deletePost(@PathVariable long id) {
 
-        return "posts/index";
+        postDao.deleteById(id);
+        return "redirect:/posts";
     }
 
 
@@ -76,8 +73,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String updatePosts(@PathVariable long id, @PathVariable String title, @PathVariable String body){
-        Post post = new Post(
+    public String updatePost(@PathVariable long id, @RequestParam String title, @RequestParam String body)
+    {    Post post = new Post(
                 id,
                 title,
                 body
