@@ -1,25 +1,37 @@
 package com.codeup.springblog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "postsDetails")
 public class PostDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private long id;
 
     private boolean isAwesome;
 
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String historyOfPost;
 
     @Column(nullable = false)
     private String topicDescription;
 
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+//    private List<PostImage> postImages;
+
     public PostDetails(){}
+
+//    public List<PostImage> getPostImages() {
+//        return postImages;
+//    }
+//
+//    public void setPostImages(List<PostImage> postImages) {
+//        this.postImages = postImages;
+//    }
 
     public long getId() {
         return id;

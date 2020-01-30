@@ -83,7 +83,17 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    @GetMapping("/one/test")
+    public String oneToOneTest(Model model){
+        model.addAttribute("posts", postDao.findAll());
+        return "one-to-one-test";
+    }
 
+//    @GetMapping("/oneMany/test")
+//    public String oneToMany(Model model){
+//        model.addAttribute("posts", postDao.findAll());
+//        return "one-to-many-test";
+//    }
 
 
 }
