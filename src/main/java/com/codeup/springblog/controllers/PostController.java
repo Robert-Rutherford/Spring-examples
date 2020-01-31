@@ -32,7 +32,7 @@ public class PostController {
     }
 
     @PostMapping("/posts")
-    public String indexAction(@PathVariable(name = "hiddenId") String id, Model model){
+    public String indexAction(@RequestParam(name = "editPostBtn") boolean editPressed, Model model){
 
         return "posts/index";
     }
@@ -53,22 +53,28 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String createPostPage(){
-
-
+    public String createPostPage(Model model){
+        model.addAttribute("newPost", new Post());
         return "/posts/create";
     }
 
+//    @PostMapping("/posts/create")
+//    public String createPost(@RequestParam String title, @RequestParam String body) {
+//        long idTemp = 2;
+//        User userCheck = userDao.findById(idTemp);
+//
+//        Post post = new Post(
+//            title,
+//            body,
+//            userCheck
+//    );
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam String title, @RequestParam String body) {
-        long idTemp = 2;
-        User userCheck = userDao.findById(idTemp);
-
-        Post post = new Post(
-            title,
-            body,
-            userCheck
-    );
+    public String createPost(@ModelAttribute(name = "newPost") Post post) {
+        User userTemp = userDao.findById(1);
+        post.setUser(userTemp);
         postDao.save(post);
         return "redirect:/posts";
     }
@@ -89,10 +95,13 @@ public class PostController {
 
     @PostMapping("/posts/{id}/edit")
     public String updatePost(@PathVariable long id, @RequestParam String title, @RequestParam String body)
-    {    Post post = new Post(
+    {
+        User tempUser = userDao.findById(1);
+        Post post = new Post(
                 id,
                 title,
-                body
+                body,
+                tempUser
         );
         postDao.save(post);
         return "redirect:/posts";
