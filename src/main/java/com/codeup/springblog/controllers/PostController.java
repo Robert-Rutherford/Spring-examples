@@ -76,9 +76,11 @@ public class PostController {
 //        postDao.save(post);
 //        return "redirect:/posts";
 //    }
+
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute(name = "newPost") Post post) {
         User userTemp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User userTemp = userDao.findById(1);
         post.setUser(userTemp);
         postDao.save(post);
         emailService.prepareAndSend(post, post.getTitle(),post.getBody());
@@ -92,7 +94,6 @@ public class PostController {
         return "redirect:/posts";
     }
 
-
     @GetMapping("/posts/{id}/edit")
     public String viewEditPage(@PathVariable long id, Model model){
         model.addAttribute("post", postDao.getOne(id));
@@ -103,6 +104,7 @@ public class PostController {
     public String updatePost(@PathVariable long id, @RequestParam String title, @RequestParam String body)
     {
         User tempUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User tempUser = userDao.findById(1);
         Post post = new Post(
                 id,
                 title,
