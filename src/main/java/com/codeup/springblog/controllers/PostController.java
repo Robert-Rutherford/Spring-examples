@@ -5,6 +5,7 @@ import com.codeup.springblog.models.Post;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +78,7 @@ public class PostController {
 //    }
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute(name = "newPost") Post post) {
-        User userTemp = userDao.findById(1);
+        User userTemp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(userTemp);
         postDao.save(post);
         emailService.prepareAndSend(post, post.getTitle(),post.getBody());
@@ -101,7 +102,7 @@ public class PostController {
     @PostMapping("/posts/{id}/edit")
     public String updatePost(@PathVariable long id, @RequestParam String title, @RequestParam String body)
     {
-        User tempUser = userDao.findById(1);
+        User tempUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post = new Post(
                 id,
                 title,
