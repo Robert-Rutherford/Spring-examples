@@ -58,10 +58,16 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String createPostPage(Model model){
-        model.addAttribute("newPost", new Post());
-        return "/posts/create";
+    public String createPostForm(Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(loggedInUser.getUsername());
+        model.addAttribute("post", new Post());
+        return "posts/create";
     }
+//    public String createPostPage(Model model){
+//        model.addAttribute("newPost", new Post());
+//        return "/posts/create";
+//    }
 
 //    @PostMapping("/posts/create")
 //    public String createPost(@RequestParam String title, @RequestParam String body) {
@@ -78,14 +84,20 @@ public class PostController {
 //    }
 
     @PostMapping("/posts/create")
-    public String createPost(@ModelAttribute(name = "newPost") Post post) {
-        User userTemp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User userTemp = userDao.findById(1);
-        post.setUser(userTemp);
+    public String submitPost(@ModelAttribute Post post){
+        User user = userDao.getOne(1L);
+        post.setUser(user);
         postDao.save(post);
-        emailService.prepareAndSend(post, post.getTitle(),post.getBody());
         return "redirect:/posts";
     }
+//    public String createPost(@ModelAttribute(name = "newPost") Post post) {
+//        User userTemp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+////        User userTemp = userDao.findById(1);
+//        post.setUser(userTemp);
+//        postDao.save(post);
+//        emailService.prepareAndSend(post, post.getTitle(),post.getBody());
+//        return "redirect:/posts";
+//    }
 
     @PostMapping("posts/{id}/delete")
     public String deletePost(@PathVariable long id) {
@@ -101,19 +113,25 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String updatePost(@PathVariable long id, @RequestParam String title, @RequestParam String body)
-    {
-        User tempUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User tempUser = userDao.findById(1);
-        Post post = new Post(
-                id,
-                title,
-                body,
-                tempUser
-        );
+    public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
+        User user = userDao.getOne(1L);
+        post.setUser(user);
         postDao.save(post);
         return "redirect:/posts";
     }
+//    public String updatePost(@PathVariable long id, @RequestParam String title, @RequestParam String body)
+//    {
+//        User tempUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+////        User tempUser = userDao.findById(1);
+//        Post post = new Post(
+//                id,
+//                title,
+//                body,
+//                tempUser
+//        );
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
 
     @GetMapping("/one/test")
     public String oneToOneTest(Model model){

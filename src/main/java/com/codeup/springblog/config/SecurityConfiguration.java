@@ -1,6 +1,6 @@
-package com.codeup.springblog.configurations;
+package com.codeup.springblog.config;
 
-import com.codeup.springblog.models.UserDetailsLoader;
+import com.codeup.springblog.services.UserDetailsLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 /* Login configuration */
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/ads") // user's home page, it can be any URL
+                .defaultSuccessUrl("/posts") // user's home page, it can be any URL
                 .permitAll() // Anyone can go to the login page
                 /* Logout configuration */
                 .and()
@@ -53,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/ads/create", // only authenticated users can create ads
-                        "/ads/{id}/edit", // only authenticated users can edit ads
+                        "/ads/{id}/edit",
+                        "/posts/create"// only authenticated users can edit ads
                 )
                 .authenticated()
         ;
